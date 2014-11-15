@@ -23,10 +23,18 @@ module Sal
       end
     end
 
+    def menu_items(set)
+      @_set = set
+      output = yield
+      @_set = :menu
+      output
+    end
+
     private
 
     def section
-      content_for(:menu) ? content_for(:menu).strip.downcase : request.params[:controller]
+      set = @_set || :menu
+      content_for(set) ? content_for(set).strip.downcase : request.params[:controller]
     end
   end
 end
