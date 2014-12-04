@@ -4,7 +4,7 @@ module Sal
       entities = Array(entities)
 
       if entities.detect { |entity| entity.errors.any? }
-        content_tag :div, 'Please correct the highlighted fields.', class: 'alert alert-danger'
+        content_tag :div, t(:errors_bar_message), class: 'alert alert-danger'
       end
     end
 
