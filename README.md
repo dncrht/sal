@@ -67,15 +67,45 @@ Parameters:
 - model: an active record model, or tableless
 - model2: you can provide more than one
 
+The string `Please correct the highlighted fields.` is localized as `errors_bar_message`
+into English, French, German, Italian, Portuguese and Spanish. You can override
+this in your app if you need to, editing your locale yml files.
+
 ## Error messages
 I like to put the error messages right after the field in the form.
-An initializer will patch ActionView::Base to wrap the field with the error message.
-Given a model with an error on, let's say, _title_, we'll get:
+sal provides an initializer that will patch ActionView::Base to wrap the field
+with the extra markup and the error message.
+
+Given a model with a field:
+```erb
+<%= text_field_tag :title %>
+```
+that renders this simple view:
+```html
+<input type="text" name="title">
+```
+
+Then it will add this extra HTML on an error:
 ```html
 <div class="has-error">
   <input type="text" name="title">
-  <span class="help-block">⤷ Title can't be blank.</span>
+  <span class="help-block">✖ can't be blank</span>
 </div>
+```
+
+It plays nice with Bootstrap forms. You won't have to touch any CSS.
+- Plain text fields:
+```erb
+  <div class="form-group">
+    <%= f.label :password, 'Password' %>
+    <%= f.password_field :password, :class => 'form-control' %>
+  </div>
+```
+- Checkboxes. Use this code for proper margin and alignment:
+```erb
+  <div class="form-group checkbox">
+    <%= f.label :conditions, "#{f.check_box(:conditions)}I accept the terms and conditions".html_safe, :class => 'checkbox' %>
+  </div>
 ```
 
 ## Generators
