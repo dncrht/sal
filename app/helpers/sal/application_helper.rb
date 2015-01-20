@@ -3,8 +3,15 @@ module Sal
     def errors_bar(*entities)
       entities = Array(entities)
 
-      if entities.detect { |entity| entity.errors.any? }
-        content_tag :div, t(:errors_bar_message), class: 'alert alert-danger'
+      messages = entities.map { |entity| entity.errors[:base].map &:capitalize }.flatten
+
+      # is there any non-base error?
+      if entities.detect { |entity| entity.errors.keys.detect { |error| error != :base } }
+        messages << t(:errors_bar_message)
+      end
+
+      if messages.any?
+        content_tag :div, messages.join("\n"), class: 'alert alert-danger'
       end
     end
 

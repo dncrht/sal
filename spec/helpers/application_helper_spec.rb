@@ -4,8 +4,12 @@ describe ApplicationHelper do
 
   describe '#errors_bar' do
 
-    let(:without) { double(errors: {}) }
-    let(:with) { double(errors: {base: 'error'}) }
+    # Mocking ActiveRecord error format:
+    # - errors are presented as arrays
+    # - no errors in a category returns an empty array
+    let(:without) { double(errors: {base: []}) }
+    let(:with) { double(errors: {base: ['base error']}) }
+    let(:with_non_base) { double(errors: {base: [], email: ['is invalid']}) }
     let(:text) { 'Please correct the highlighted fields.' }
 
     context 'no errors' do
@@ -16,9 +20,12 @@ describe ApplicationHelper do
 
     context 'errors' do
 
-      it { expect(helper.errors_bar(with)).to have_selector('div.alert.alert-danger', text: text) }
-      it { expect(helper.errors_bar(with, without)).to have_selector('div.alert.alert-danger', text: text) }
-      it { expect(helper.errors_bar(with, with)).to have_selector('div.alert.alert-danger', text: text) }
+      it { expect(helper.errors_bar(with)).to have_selector('div.alert.alert-danger', text: 'Base error') }
+      it { expect(helper.errors_bar(with, without)).to have_selector('div.alert.alert-danger', text: 'Base error') }
+      it { expect(helper.errors_bar(with, with_non_base)).to have_selector('div.alert.alert-danger', text: "Base error\n#{text}") }
+      it { expect(helper.errors_bar(with_non_base, without)).to have_selector('div.alert.alert-danger', text: text) }
+      it { expect(helper.errors_bar(with, with)).to have_selector('div.alert.alert-danger', text: "Base error\nBase error") }
+      it { expect(helper.errors_bar(with_non_base, with, with)).to have_selector('div.alert.alert-danger', text: "Base error\nBase error\n#{text}") }
     end
   end
 
