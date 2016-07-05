@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.files = Dir['{app,config,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
   s.test_files = Dir["spec/**/*"]
 
-  s.add_dependency 'rails', '~> 4.1'
+  s.add_dependency 'rails', '>= 4'
 
   s.add_development_dependency 'pry', '~> 0.10'
   s.add_development_dependency 'pry-rails', '~> 0.3'
