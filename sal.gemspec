@@ -15,9 +15,9 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'rails', '>= 4'
 
-  s.add_development_dependency 'pry', '~> 0.10'
-  s.add_development_dependency 'pry-rails', '~> 0.3'
-  s.add_development_dependency 'pry-byebug', '~> 1.3'
-  s.add_development_dependency 'rspec-rails', '~> 3.0'
-  s.add_development_dependency 'capybara', '~> 2.4'
+  s.add_development_dependency 'pry', '>= 0.10'
+  s.add_development_dependency 'pry-rails', '>= 0.3'
+  s.add_development_dependency 'pry-byebug', '>= 1.3'
+  s.add_development_dependency 'rspec-rails', '>= 3.0'
+  s.add_development_dependency 'capybara', '>= 2.4'
 end
