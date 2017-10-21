@@ -35,20 +35,22 @@ When providing both, `notice` will prevail.
 ## menu_item helper
 Very handy for navigation menus:
 ```erb
-<%= menu_item 'first' %>First option<% end %>
-<%= menu_item 'second', :div %><%= link_to root_path, 'Second option' %><% end %>
+<%= menu_item 'first' do %>First option<% end %>
+<%= menu_item 'second', tag: :div do %><%= link_to root_path, 'Second option' %><% end %>
+<%= menu_item 'third', class: 'nav-link' do %>Third option<% end %>
 ```
 
 Renders:
 ```html
 <li class="active">First option<li>
 <div><a href="/">Second option</a><div>
+<li class="nav-link">Third option</li>
 ```
 
 Parameters:
-`menu_item(item, tag)`
+`menu_item(item, options)`
 - item: item name
-- tag: `:li` by default
+- options: a has of options such as :class, etc… An additional option :tag is provided in case you don't want to use LI as default
 
 ## errors_bar helper
 Will indicate if any model in your form has an error. It supports multiple models

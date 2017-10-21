@@ -62,10 +62,26 @@ describe ApplicationHelper do
       allow(helper).to receive(:section) { 'selected_list_item' }
     end
 
-    context 'list item is selected' do
+    context 'tag is selected' do
       let(:item) { 'selected_list_item' }
 
       it { is_expected.to have_selector('li.active', 'content') }
+    end
+
+    context 'list item is selected' do
+      let(:item) { 'selected_list_item' }
+
+      it 'appends the active class' do
+        expect(helper.menu_item(item, tag: 'div') { 'content' }).to have_selector('div.active', 'content')
+      end
+    end
+
+    context 'list item is selected and there are other options' do
+      let(:item) { 'selected_list_item' }
+
+      it 'appends the active class' do
+        expect(helper.menu_item(item, class: 'nav-item') { 'content' }).to have_selector('li.nav-item.active', 'content')
+      end
     end
 
     context 'list item is not selected' do

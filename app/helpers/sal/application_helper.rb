@@ -23,8 +23,12 @@ module Sal
       end
     end
 
-    def menu_item(item, tag = :li)
-      options = section == item ? {class: 'active'} : {}
+    def menu_item(item, options = {})
+      tag = options.delete(:tag) || 'li'
+      if section == item
+        klass = options[:class].to_s.split(' ').push('active').join(' ')
+        options[:class] = klass
+      end
       content_tag tag, options do
         yield
       end
