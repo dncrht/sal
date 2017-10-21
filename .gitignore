@@ -6,4 +6,5 @@ tmp/
 .DS_Store
 *.orig
 *.gem
+Gemfile.lock
 
