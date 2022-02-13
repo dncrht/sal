@@ -3,10 +3,10 @@ module Sal
     def errors_bar(*entities)
       entities = Array(entities)
 
-      messages = entities.map { |entity| entity.errors[:base].map &:capitalize }.flatten
+      messages = entities.map { |entity| entity.errors.select { |error| error.attribute == :base }.map(&:to_s).map(&:capitalize) }.flatten
 
       # is there any non-base error?
-      if entities.detect { |entity| entity.errors.keys.detect { |error| error != :base } }
+      if entities.detect { |entity| entity.errors.detect { |error| error.attribute != :base } }
         messages << t(:errors_bar_message)
       end
 
